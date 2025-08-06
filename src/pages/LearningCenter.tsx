@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import {
   BookOpen,
-  Video,
   Users,
   Award,
   Clock,
   Play,
   Download,
   Star,
-  TrendingUp,
-  VrIcon,
-  Brain,
-  Target
+  Monitor
 } from 'lucide-react';
 
 const LearningCenter: React.FC = () => {
@@ -336,7 +332,7 @@ const LearningCenter: React.FC = () => {
                     )}
                     {course.type === 'vr' && (
                       <button className="btn-secondary p-2">
-                        <VrIcon className="h-4 w-4" />
+                        <Monitor className="h-4 w-4" />
                       </button>
                     )}
                   </div>

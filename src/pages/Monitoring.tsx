@@ -6,7 +6,6 @@ import {
   Thermometer,
   AlertTriangle,
   Eye,
-  Camera,
   Zap,
   Clock
 } from 'lucide-react';

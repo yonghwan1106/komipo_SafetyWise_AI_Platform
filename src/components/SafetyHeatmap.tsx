@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Users, AlertTriangle } from 'lucide-react';
+import { Users, AlertTriangle } from 'lucide-react';
 
 const SafetyHeatmap: React.FC = () => {
   const areas = [

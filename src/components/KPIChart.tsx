@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 
 interface KPIChartProps {
   title: string;
@@ -55,7 +55,7 @@ const KPIChart: React.FC<KPIChartProps> = ({ title, subtitle }) => {
 
           {/* Data visualization */}
           <div className="absolute inset-0 flex items-end justify-between px-4">
-            {data.map((item, index) => {
+            {data.map((item) => {
               const safetyHeight = (item.safety / maxValue) * 100;
               const educationHeight = (item.education / maxValue) * 100;
 

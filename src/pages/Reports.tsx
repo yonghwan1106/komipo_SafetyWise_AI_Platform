@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import {
   FileText,
   Download,
-  Calendar,
   TrendingUp,
   TrendingDown,
   Leaf,
   Users,
   Shield,
-  Target,
-  BarChart3,
-  PieChart,
   Filter,
   RefreshCw
 } from 'lucide-react';

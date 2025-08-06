@@ -10,8 +10,6 @@ import {
   Users,
   Star,
   Clock,
-  Target,
-  TrendingUp,
   Edit,
   Settings,
   Bell,
@@ -342,7 +340,7 @@ const Profile: React.FC = () => {
               <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-semibold text-gray-900">이번 달 학습 목표</h4>
-                  <Target className="h-5 w-5 text-purple-500" />
+                  <Award className="h-5 w-5 text-purple-500" />
                 </div>
                 <div className="text-sm text-gray-600 mb-2">목표: 20시간 | 달성: 16시간</div>
                 <div className="w-full bg-purple-200 rounded-full h-3">

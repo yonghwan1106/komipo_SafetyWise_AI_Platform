@@ -22,7 +22,7 @@ const Dashboard: React.FC = () => {
       change: '+12',
       changeType: 'increase' as const,
       icon: Users,
-      color: 'blue'
+      color: 'blue' as const
     },
     {
       name: '안전 상태',
@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
       change: '+2.1%',
       changeType: 'increase' as const,
       icon: Shield,
-      color: 'green'
+      color: 'green' as const
     },
     {
       name: '위험 알림',
@@ -38,7 +38,7 @@ const Dashboard: React.FC = () => {
       change: '-2',
       changeType: 'decrease' as const,
       icon: AlertTriangle,
-      color: 'red'
+      color: 'red' as const
     },
     {
       name: '교육 완료율',
@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
       change: '+5.7%',
       changeType: 'increase' as const,
       icon: TrendingUp,
-      color: 'purple'
+      color: 'purple' as const
     }
   ];
 
