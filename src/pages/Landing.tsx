@@ -8,7 +8,6 @@ import {
   TrendingUp,
   Eye,
   Monitor,
-  Award,
   ArrowRight,
   Star,
   Play,
