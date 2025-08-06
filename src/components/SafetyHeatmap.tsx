@@ -3,12 +3,12 @@ import { Users, AlertTriangle } from 'lucide-react';
 
 const SafetyHeatmap: React.FC = () => {
   const areas = [
-    { id: 1, name: '1호기 터빈실', workers: 12, status: 'safe', x: 20, y: 30 },
-    { id: 2, name: '2호기 발전기실', workers: 8, status: 'safe', x: 60, y: 25 },
-    { id: 3, name: '제어실', workers: 15, status: 'safe', x: 40, y: 15 },
-    { id: 4, name: '냉각탑', workers: 6, status: 'warning', x: 80, y: 60 },
-    { id: 5, name: '변압기실', workers: 4, status: 'safe', x: 15, y: 70 },
-    { id: 6, name: '정비동', workers: 22, status: 'danger', x: 70, y: 75 },
+    { id: 1, name: '1호기 터빈실', workers: 12, status: 'safe', x: 15, y: 25 },
+    { id: 2, name: '2호기 발전기실', workers: 8, status: 'safe', x: 45, y: 20 },
+    { id: 3, name: '제어실', workers: 15, status: 'safe', x: 75, y: 15 },
+    { id: 4, name: '냉각탑 A동', workers: 6, status: 'warning', x: 80, y: 50 },
+    { id: 5, name: '변압기실', workers: 4, status: 'safe', x: 20, y: 75 },
+    { id: 6, name: '정비동 3층', workers: 22, status: 'danger', x: 60, y: 80 },
   ];
 
   const getStatusColor = (status: string) => {
@@ -36,21 +36,46 @@ const SafetyHeatmap: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Map Container */}
-      <div className="relative bg-gray-100 rounded-xl overflow-hidden" style={{ height: '300px' }}>
+      <div className="relative bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl overflow-hidden border border-blue-200" style={{ height: '400px' }}>
         {/* Background Grid */}
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%">
             <defs>
-              <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ccc" strokeWidth="1"/>
+              <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#2563eb" strokeWidth="1"/>
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
           </svg>
         </div>
         
-        {/* Building Outline */}
-        <div className="absolute inset-4 border-2 border-gray-300 rounded-lg bg-white/50" />
+        {/* Building Complex Layout */}
+        <div className="absolute inset-6">
+          {/* Main Building */}
+          <div className="absolute left-4 top-4 w-32 h-24 bg-white/60 border-2 border-gray-400 rounded-lg shadow-lg">
+            <div className="text-xs text-center mt-2 font-medium text-gray-700">1호기 발전소</div>
+          </div>
+          
+          {/* Secondary Building */}
+          <div className="absolute right-6 top-4 w-28 h-20 bg-white/60 border-2 border-gray-400 rounded-lg shadow-lg">
+            <div className="text-xs text-center mt-2 font-medium text-gray-700">2호기 발전소</div>
+          </div>
+          
+          {/* Control Room */}
+          <div className="absolute right-4 top-32 w-20 h-16 bg-white/80 border-2 border-blue-400 rounded-lg shadow-lg">
+            <div className="text-xs text-center mt-1 font-medium text-blue-700">제어실</div>
+          </div>
+          
+          {/* Maintenance Building */}
+          <div className="absolute left-6 bottom-6 w-36 h-20 bg-white/60 border-2 border-gray-400 rounded-lg shadow-lg">
+            <div className="text-xs text-center mt-2 font-medium text-gray-700">정비동</div>
+          </div>
+          
+          {/* Cooling Tower */}
+          <div className="absolute right-8 bottom-8 w-16 h-16 bg-white/60 border-2 border-gray-400 rounded-full shadow-lg">
+            <div className="text-xs text-center mt-4 font-medium text-gray-700">냉각탑</div>
+          </div>
+        </div>
         
         {/* Area Markers */}
         {areas.map((area) => (
@@ -59,15 +84,41 @@ const SafetyHeatmap: React.FC = () => {
             className="absolute transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
             style={{ left: `${area.x}%`, top: `${area.y}%` }}
           >
-            <div className={`w-8 h-8 rounded-full ${getStatusColor(area.status)} flex items-center justify-center shadow-lg animate-pulse`}>
+            {/* Pulsing Ring Effect */}
+            <div className={`absolute w-12 h-12 rounded-full ${
+              area.status === 'safe' ? 'bg-green-400/30' :
+              area.status === 'warning' ? 'bg-yellow-400/30' : 'bg-red-400/30'
+            } animate-ping`}></div>
+            
+            {/* Main Marker */}
+            <div className={`relative w-10 h-10 rounded-full ${getStatusColor(area.status)} flex items-center justify-center shadow-xl border-2 border-white z-10`}>
               {getStatusIcon(area.status)}
+              <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full ${
+                area.status === 'safe' ? 'bg-green-600' :
+                area.status === 'warning' ? 'bg-yellow-600' : 'bg-red-600'
+              } text-white text-xs flex items-center justify-center font-bold border-2 border-white`}>
+                {area.workers}
+              </div>
             </div>
             
-            {/* Tooltip */}
-            <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-              <div className="font-semibold">{area.name}</div>
-              <div>작업자: {area.workers}명</div>
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+            {/* Enhanced Tooltip */}
+            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-800 to-gray-900 text-white text-sm rounded-xl px-4 py-3 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-20 shadow-2xl border border-gray-600">
+              <div className="font-bold text-blue-200">{area.name}</div>
+              <div className="flex items-center mt-1">
+                <Users className="h-3 w-3 mr-1" />
+                <span>작업자: {area.workers}명</span>
+              </div>
+              <div className="flex items-center mt-1">
+                <div className={`w-2 h-2 rounded-full mr-2 ${
+                  area.status === 'safe' ? 'bg-green-400' :
+                  area.status === 'warning' ? 'bg-yellow-400' : 'bg-red-400'
+                }`}></div>
+                <span className="capitalize">{
+                  area.status === 'safe' ? '안전' :
+                  area.status === 'warning' ? '주의' : '위험'
+                }</span>
+              </div>
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
             </div>
           </div>
         ))}
@@ -94,25 +145,51 @@ const SafetyHeatmap: React.FC = () => {
         </div>
       </div>
 
-      {/* Status Summary */}
-      <div className="grid grid-cols-3 gap-4 text-center">
-        <div className="bg-green-50 rounded-lg p-3">
-          <div className="text-2xl font-bold text-green-600">
-            {areas.filter(area => area.status === 'safe').length}
+      {/* Enhanced Status Summary */}
+      <div className="grid grid-cols-3 gap-6">
+        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200 hover:shadow-lg transition-all duration-200">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-3xl font-bold text-green-600">
+              {areas.filter(area => area.status === 'safe').length}
+            </div>
+            <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+              <Users className="h-6 w-6 text-white" />
+            </div>
           </div>
-          <div className="text-sm text-green-700">안전 구역</div>
+          <div className="text-sm font-medium text-green-700 mb-1">안전 구역</div>
+          <div className="text-xs text-green-600">
+            작업자 {areas.filter(area => area.status === 'safe').reduce((sum, area) => sum + area.workers, 0)}명 근무 중
+          </div>
         </div>
-        <div className="bg-yellow-50 rounded-lg p-3">
-          <div className="text-2xl font-bold text-yellow-600">
-            {areas.filter(area => area.status === 'warning').length}
+        
+        <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-4 border border-yellow-200 hover:shadow-lg transition-all duration-200">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-3xl font-bold text-yellow-600">
+              {areas.filter(area => area.status === 'warning').length}
+            </div>
+            <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center">
+              <AlertTriangle className="h-6 w-6 text-white" />
+            </div>
           </div>
-          <div className="text-sm text-yellow-700">주의 구역</div>
+          <div className="text-sm font-medium text-yellow-700 mb-1">주의 구역</div>
+          <div className="text-xs text-yellow-600">
+            작업자 {areas.filter(area => area.status === 'warning').reduce((sum, area) => sum + area.workers, 0)}명 주의 필요
+          </div>
         </div>
-        <div className="bg-red-50 rounded-lg p-3">
-          <div className="text-2xl font-bold text-red-600">
-            {areas.filter(area => area.status === 'danger').length}
+        
+        <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-4 border border-red-200 hover:shadow-lg transition-all duration-200">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-3xl font-bold text-red-600">
+              {areas.filter(area => area.status === 'danger').length}
+            </div>
+            <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+              <AlertTriangle className="h-6 w-6 text-white" />
+            </div>
           </div>
-          <div className="text-sm text-red-700">위험 구역</div>
+          <div className="text-sm font-medium text-red-700 mb-1">위험 구역</div>
+          <div className="text-xs text-red-600">
+            작업자 {areas.filter(area => area.status === 'danger').reduce((sum, area) => sum + area.workers, 0)}명 즉시 대응 필요
+          </div>
         </div>
       </div>
     </div>
