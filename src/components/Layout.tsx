@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
 
   const navigation = [
-    { name: '대시보드', href: '/', icon: LayoutDashboard },
+    { name: '대시보드', href: '/dashboard', icon: LayoutDashboard },
     { name: '실시간 모니터링', href: '/monitoring', icon: Monitor },
     { name: '교육 센터', href: '/learning', icon: BookOpen },
     { name: 'ESG 보고서', href: '/reports', icon: FileText },
@@ -44,13 +44,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               >
                 <Menu className="h-6 w-6" />
               </button>
-              <div className="flex items-center ml-2 md:ml-0">
+              <Link to="/" className="flex items-center ml-2 md:ml-0 hover:opacity-80 transition-opacity">
                 <Shield className="h-8 w-8 text-primary-500" />
                 <div className="ml-3">
                   <h1 className="text-xl font-bold text-gray-900">SafetyWise AI</h1>
                   <p className="text-xs text-gray-500">2025 KOMIPO 혁신 50대 과제</p>
                 </div>
-              </div>
+              </Link>
             </div>
 
             {/* Search and Notifications */}
