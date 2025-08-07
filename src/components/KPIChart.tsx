@@ -68,33 +68,35 @@ const KPIChart: React.FC<KPIChartProps> = ({ title, subtitle }) => {
           {/* Data visualization */}
           <div className="absolute inset-0 flex items-end justify-between px-4 pb-8">
             {data.map((item) => {
-              const safetyHeight = Math.max(5, (item.safety / maxValue) * 100);
-              const educationHeight = Math.max(5, (item.education / maxValue) * 100);
+              // Calculate height in pixels based on chart container height (192px available for bars)
+              const chartHeight = 192; // h-56 (224px) - padding (32px) = 192px
+              const safetyHeight = Math.max(8, (item.safety / maxValue) * chartHeight);
+              const educationHeight = Math.max(8, (item.education / maxValue) * chartHeight);
 
               return (
                 <div key={item.month} className="flex flex-col items-center space-y-2 flex-1 group">
-                  <div className="w-full max-w-20 flex space-x-2 items-end">
+                  <div className="w-full max-w-24 flex space-x-1 items-end justify-center">
                     {/* Safety bar */}
-                    <div className="flex-1 relative">
+                    <div className="flex-1 relative min-w-[16px]">
                       <div
-                        className="bg-gradient-to-t from-primary-600 to-primary-400 rounded-t-lg shadow-lg transition-all duration-500 hover:from-primary-700 hover:to-primary-500 group-hover:scale-105 relative"
-                        style={{ height: `${safetyHeight}%` }}
+                        className="bg-gradient-to-t from-primary-600 to-primary-400 rounded-t-lg shadow-lg transition-all duration-500 hover:from-primary-700 hover:to-primary-500 group-hover:scale-105 relative w-full"
+                        style={{ height: `${safetyHeight}px` }}
                       >
                         {/* Value label on hover */}
-                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-primary-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-primary-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                           {Math.round(item.safety)}%
                         </div>
                       </div>
                     </div>
                     
                     {/* Education bar */}
-                    <div className="flex-1 relative">
+                    <div className="flex-1 relative min-w-[16px]">
                       <div
-                        className="bg-gradient-to-t from-green-600 to-green-400 rounded-t-lg shadow-lg transition-all duration-500 hover:from-green-700 hover:to-green-500 group-hover:scale-105 relative"
-                        style={{ height: `${educationHeight}%` }}
+                        className="bg-gradient-to-t from-green-600 to-green-400 rounded-t-lg shadow-lg transition-all duration-500 hover:from-green-700 hover:to-green-500 group-hover:scale-105 relative w-full"
+                        style={{ height: `${educationHeight}px` }}
                       >
                         {/* Value label on hover */}
-                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-green-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-green-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                           {Math.round(item.education)}%
                         </div>
                       </div>
