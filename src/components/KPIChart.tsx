@@ -68,11 +68,13 @@ const KPIChart: React.FC<KPIChartProps> = ({ title, subtitle }) => {
           {/* Data visualization */}
           <div className="absolute inset-0 flex items-end justify-between px-4 pb-8">
             {data.map((item) => {
-              // Calculate height in pixels based on available chart area
-              // h-56 = 224px, pb-8 = 32px, leaving 192px, but use 180px to stay within grid bounds
-              const chartHeight = 180; // Actual usable height for bars to stay within y-axis grid
-              const safetyHeight = Math.max(8, (item.safety / maxValue) * chartHeight);
-              const educationHeight = Math.max(8, (item.education / maxValue) * chartHeight);
+              // Calculate height based on actual grid area
+              // Grid lines use full height minus bottom padding (224px - 32px = 192px)
+              // But we need to account for the fact that 100% line is at the top, 0% at bottom
+              const availableHeight = 224 - 32; // h-56 minus pb-8 = 192px
+              const usableHeight = availableHeight * 0.85; // Use 85% to stay safely within grid bounds
+              const safetyHeight = Math.max(8, (item.safety / maxValue) * usableHeight);
+              const educationHeight = Math.max(8, (item.education / maxValue) * usableHeight);
 
               return (
                 <div key={item.month} className="flex flex-col items-center space-y-2 flex-1 group">
