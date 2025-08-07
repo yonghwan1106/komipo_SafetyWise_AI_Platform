@@ -68,8 +68,9 @@ const KPIChart: React.FC<KPIChartProps> = ({ title, subtitle }) => {
           {/* Data visualization */}
           <div className="absolute inset-0 flex items-end justify-between px-4 pb-8">
             {data.map((item) => {
-              // Calculate height in pixels based on chart container height (192px available for bars)
-              const chartHeight = 192; // h-56 (224px) - padding (32px) = 192px
+              // Calculate height in pixels based on available chart area
+              // h-56 = 224px, pb-8 = 32px, leaving 192px, but use 180px to stay within grid bounds
+              const chartHeight = 180; // Actual usable height for bars to stay within y-axis grid
               const safetyHeight = Math.max(8, (item.safety / maxValue) * chartHeight);
               const educationHeight = Math.max(8, (item.education / maxValue) * chartHeight);
 
